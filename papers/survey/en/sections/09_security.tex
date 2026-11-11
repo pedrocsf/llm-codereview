@@ -1,0 +1,18 @@
+\section{Security and Reliability}\label{sec:security}
+
+\textbf{LLMs versus SAST.}
+Across 7 LLMs and 5 prompts, LLMs significantly outperformed SAST tools on security code review~\cite{yu2024insight}. At repository level, 12 open LLMs detected 90--100\% of vulnerabilities but with many false positives, whereas 15 SAST tools had low detection and few false positives; ensembling partly offsets both weaknesses~\cite{zhou2024comparison}.
+Realistic data changes the picture: a 7B model scoring 68.26\% F1 on BigVul scored 3.09\% on PrimeVul~\cite{ding2025vulnerability}.
+
+\textbf{Hallucination and unfaithful reasoning.}
+Every deployment reports ungrounded comments, yet the notes found no peer-reviewed per-comment hallucination rate for a production reviewer. Atlassian's HalluJudge detects context-misaligned hallucinations at F1 0.85 for about \$0.009 per assessment, but its abstract gives no base rate~\cite{tantithamthavorn2026hallujudge}. Accuracy-only metrics also miss correct verdicts reached through wrong reasoning, which are acknowledged but not quantified in the review setting.
+
+\textbf{Attacks.}
+Three attack families succeed against real pipelines. Templated bias in PR metadata was ineffective, but LLM-refined PR framing reintroduced the vulnerability past Claude Code and CodeRabbit in 32 of 33 cases~\cite{alexopoulos2026when}. Flashboom decoy code blinded auditors with success up to 96.3\% on CodeLlama and 83.05\% on Gemma~\cite{li2025make}. GitInject ran 11 scenarios against five live GitHub Actions workflows from four AI providers; every provider fell to at least one high-severity injection, because configuration files from unmerged contributions are loaded as operator-level instructions~\cite{isbarov2026gitinject}.
+The evidence is not uniform: in-code adversarial comments were not significantly effective against eight frontier detectors over 9,366 trials~\cite{thornton2026can}. The gap plausibly reflects channel and optimisation (iterative versus templated); we read both as showing that naive manipulation is weak and optimised manipulation is not. Several of these results are 2026 preprints.
+
+\textbf{Mitigations.}
+In the same study, SAST cross-referencing was the best defence (96.9\% detection), while stripping comments hurt weaker models~\cite{thornton2026can}. LLM triage of SAST warnings is promising: at Tencent, hybrid techniques removed 94--98\% of false positives while maintaining high recall~\cite{du2026reducing}, and QASecClaw raised F1 from 78.39\% (Semgrep alone) to 90.93\% at a 3.1\% recall cost (preprint)~\cite{ameen2026qasecclaw}.
+
+\textbf{Non-determinism.}
+We found no review-specific measurement of output variance; the only evidence comes from code generation, where we did not cite it, so repeated-run reporting remains a gap.

@@ -1,0 +1,40 @@
+\section{Open Challenges and Research Agenda}\label{sec:gaps}
+
+The evidence reviewed above leaves twelve gaps, ordered by how strongly the evidence demands them, how many independent sources raise them, and how directly a low-cost architecture can address them. Table~\ref{tab:gaps} summarizes them. Most are cost, evaluation or deployment questions rather than questions about the generator.
+
+\begin{table}[t]
+\centering
+\caption{Twelve prioritized open gaps. Metrics are not comparable across studies.}
+\label{tab:gaps}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}r>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\# & Gap & Key evidence & Research direction \\
+\midrule
+1 & Cost--quality trade-offs & General cascades save 40--98\% of cost~\cite{chen2023frugalgpt}, a code-completion cascade 26--70\%~\cite{chen2024model}; no review cascade evaluated, and no industrial reviewer reports cost per PR~\cite{sun2025bitsai,tantithamthavorn2026rovodev} & Cascades and routers for review, with tokens and dollars per PR \\
+2 & Precision filters that preserve recall & BitsAI-CR recall fell from 45.50 to 39.77~\cite{sun2025bitsai}; the ICML validator can discard bug-detecting comments~\cite{lu2025towards} & Head-to-head comparison of judge, classifier, consensus and execution filters \\
+3 & Invalid, incomparable evaluation & Judge--label agreement 0.44--0.62~\cite{karakaya2026understanding}; synthetic benchmarks overstate F1 by about 92\%~\cite{kumar2026bigger} & Shared outcome taxonomy, precision and recall, judge meta-evaluation \\
+4 & Context under a budget & Context helps~\cite{hu2025benchmarking} and hurts~\cite{kumar2026swe,zhang2026aacr} depending on the benchmark & Controlled diff/file/repository ablation with cost \\
+5 & Small and local models & PEFT evidence comes from reference-based metrics~\cite{lu2023llama} or internal benchmarks~\cite{maddila2025ai} & Size and quantization curves on real-PR benchmarks \\
+6 & Longitudinal feedback learning & Rejection is learnable at up to 76\% F1~\cite{lin2026agentic}; labels are noisy~\cite{karakaya2026understanding} & Per-team adaptation with temporal splits \\
+7 & Adversarial PRs and injection & Attacks succeed~\cite{alexopoulos2026when}; comment stripping backfires on weaker models~\cite{thornton2026can} & Defences evaluated against frontier reviewers \\
+8 & Hallucination and calibration & No production reviewer publishes a per-comment hallucination rate~\cite{tantithamthavorn2026hallujudge} & Hallucination rates; confidence as a predictor of true positives \\
+9 & Human factors & One controlled experiment (n = 29) found anchoring and no time savings~\cite{tufano2025deep}; cycle-time evidence conflicts~\cite{tantithamthavorn2026rovodev,cihan2025automated} & Causal studies of fatigue and defect escape \\
+10 & Multi-round review and sycophancy & Performance degrades with rounds~\cite{zheng2026from} & Pushback and withdrawal studies \\
+11 & Data quality, contamination, languages & About a third of mined comments are noise~\cite{liu2025too}; 58 of 78 language-specific approaches target Java~\cite{tufano2025automating} & Replication, decontamination, low-resource languages \\
+12 & Privacy, compliance, ROI & Only cost--benefit figure is \$0.48 per PR at Beko~\cite{cihan2025automated} & Empirical leakage, regulatory and ROI analyses \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Cost and filtering.}
+No paper evaluates a cascade or router for review. CRBugBench only recommends dispatching by PR characteristics~\cite{yang2026when}, while a smaller model can win outright: Haiku 4.5 beat Sonnet 4.6 at 3.2$\times$ lower cost~\cite{kumar2026bigger}. Agent designs differ by 5--15$\times$ in tokens~\cite{li2026opencodereview}. Every verifier studied trades recall for precision, and no paper compares filter types on one dataset. In production, noise binds: 56.3\% of CodeRabbit comments were rejected~\cite{lin2026agentic}.
+
+\paragraph{Evaluation and context.}
+Human-comment ground truth misses about 74\% of verified issues, since 1,114 of 1,505 were added by expert verification~\cite{zhang2026aacr}. Each PR-level benchmark uses its own judge~\cite{zeng2025swr,kumar2026swe,zhang2026aacr}, and field metrics range from 7--8\% acceptance to 73.8\% ``resolved'' for incompatible reasons~\cite{cihan2025automated}.
+
+\paragraph{Deployment and safety.}
+No study measures review fatigue, defect escape when a bot is present, or sycophancy under pushback, and no empirical study of IP leakage or regulatory constraints was found.
+
+\paragraph{Research agenda.}
+Gaps 1, 2, 5 and 6 share one design space and can be attacked together by a cost-aware cascade evaluated on real-PR benchmarks with per-PR cost reported. Each component has independent support, yet nobody has assembled and measured the whole. Such an evaluation should report precision, recall, tokens and latency together on at least one human-comment benchmark and one known-defect benchmark, since otherwise its claims would meet the comparability problems of gap 3. A follow-up paper will propose and evaluate such a design.

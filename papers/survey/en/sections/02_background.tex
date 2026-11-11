@@ -1,0 +1,27 @@
+\section{Background and Related Surveys}\label{sec:background}
+\textbf{Modern code review and its tasks.} Modern code review is the lightweight, tool-supported inspection of a change before it is merged. Work on automating it covers many tasks. The dedicated systematic review of automating code review covers 119 studies across 34 tasks in 9 macro-categories, and reviewer recommendation dominates it with 36 papers~\cite{tufano2025automating}. Three tasks matter most for LLMs: generating review comments, detecting issues in a change, and refining code according to a comment.
+
+\textbf{Pre-LLM baselines.} Pre-trained models set the baselines that later work compares against. Tufano et al. showed that pre-trained models boost code review automation~\cite{tufano2022using}, and CodeReviewer pre-trained on large-scale review data and became the standard foundational model and dataset~\cite{li2022codereviewer}. Evaluation at that stage relied on similarity to the human reference comment.
+
+\textbf{Existing surveys.} Table~\ref{tab:surveys} compares the surveys we found. Only one systematic review is dedicated to automating code review, and its search ran until 20 December 2024~\cite{tufano2025automating}. It names cost as a barrier in only 5 papers. Broader reviews of modern code review~\cite{yang2025roadmap,badampudi2023modern,davila2021systematic} and the general LLM4SE surveys~\cite{hou2023large,zhang2023survey,fan2023large} treat review as one topic among many. Khan et al. cover only benchmarks and evaluation~\cite{khan2026survey}, and the only efficiency-focused LLM4SE review is not specific to review~\cite{shi2024efficient}. We found no survey dedicated to LLM-based or agentic code review over 2024--2026 that systematically covers cost, small models, cascades or learning from feedback. This absence is likely but not certain, because our coverage of 2026 journals is incomplete.
+
+\begin{table}[t]
+\caption{Existing surveys relevant to LLM-based code review. Counts are as reported by each survey; a dash means no count was recorded.}\label{tab:surveys}
+\setlength{\tabcolsep}{3pt}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.6cm}p{2.5cm}p{1.3cm}Xcc@{}}
+\toprule
+Survey & Period & Studies & Focus & Cost & Agents \\
+\midrule
+Tufano \& Bavota~\cite{tufano2025automating} & search to Dec. 2024 & 119 & Automating code review (34 tasks) & partly & no \\
+Yang et al.~\cite{yang2025roadmap} & 2013--2025 & 231 (v1) & Modern code review, broad & no & no \\
+Khan et al.~\cite{khan2026survey} & pre-LLM and LLM era & 99 & Benchmarks and evaluation only & no & no \\
+Badampudi et al.~\cite{badampudi2023modern} & up to 2021 & 244 & Modern code review (pre-LLM) & no & no \\
+Davila \& Nunes~\cite{davila2021systematic} & pre-LLM & --- & Taxonomy of modern code review & no & no \\
+Hou et al.~\cite{hou2023large} & LLM4SE & 395 & LLMs for SE; review is one task & no & no \\
+Zhang et al.~\cite{zhang2023survey} & LLM4SE & 947 & LLMs for SE; review is one task & no & no \\
+Fan et al.~\cite{fan2023large} & LLM4SE & --- & LLMs for SE, open problems & no & no \\
+Shi et al.~\cite{shi2024efficient} & LLM4SE & --- & Efficient and green LLM4SE & general & no \\
+\bottomrule
+\end{tabularx}
+\end{table}

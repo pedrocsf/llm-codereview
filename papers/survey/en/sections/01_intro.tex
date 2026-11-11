@@ -1,0 +1,16 @@
+\section{Introduction}\label{sec:intro}
+Code review is a central quality practice in software development, and automating parts of it has been studied for years. Between 2023 and 2026 the field changed character. Early work generated review comments for mined code hunks and scored them with BLEU-style similarity to the human comment~\cite{li2022codereviewer}. Current work builds multi-stage systems that run on real pull requests (PRs) and are judged by issue-level precision and recall, or by what developers do with the comments.
+
+The main result of this period is that generating plausible comments is no longer the hard part. Precision, context selection and evaluation validity are. On a realistic PR-level benchmark such as SWR-Bench, the best systems still reach an F1 of only about 19--22\%~\cite{zeng2025swrbench}. In production, industrial systems converge on one design, generating broadly and then filtering hard, and the verifier that implements the filter lifted BitsAI-CR's precision from about 25\% to 75\%~\cite{sun2025bitsai}. Suppression rules took Google's AutoCommenter from 54\% to 80\% useful comments~\cite{vijayvergiya2024ai}. At the same time the attack surface is real: LLM-refined PR framing got vulnerabilities past two production reviewers in 32 of 33 cases~\cite{alexopoulos2026when}.
+
+\textbf{Thesis.} Progress in this period moved from the model to the pipeline around it. LLM code review should be treated as a system design and measurement problem with a cost axis, not as a comment-generation task.
+
+\textbf{Contributions.} This survey makes four contributions.
+\begin{enumerate}
+\item A survey of LLM-based code review for 2023--2026, built with a structured multi-source review (Section~\ref{sec:method}).
+\item A taxonomy of seven dimensions that adds deployment cost (D6) and trust risk (D7) to the task, adaptation, architecture, context and evaluation dimensions used before (Section~\ref{sec:taxonomy}).
+\item A quantitative synthesis in which every number names its metric and acceptance figures are explicitly marked as non-comparable (Sections~\ref{sec:benchmarks}--\ref{sec:security}).
+\item An agenda of twelve prioritised open gaps (Section~\ref{sec:gaps}).
+\end{enumerate}
+
+\textbf{Organisation.} Section~\ref{sec:background} gives background and compares existing surveys, and Section~\ref{sec:method} describes the method. Sections~\ref{sec:taxonomy}--\ref{sec:security} cover the taxonomy, benchmarks, techniques, systems, deployment and security. Section~\ref{sec:gaps} lists the gaps, Section~\ref{sec:threats} discusses threats to validity, and Section~\ref{sec:conclusion} concludes.
